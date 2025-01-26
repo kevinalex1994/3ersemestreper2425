@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+public class TorreDeHanoi
+{
+    public static void Resolver(int discos, Stack<int> origen, Stack<int> destino, Stack<int> auxiliar)
+    {
+        if (discos == 1)
+        {
+            destino.Push(origen.Pop());
+            ImprimirTorres();
+        }
+        else
+        {
+            Resolver(discos - 1, origen, auxiliar, destino);
+            destino.Push(origen.Pop());
+            ImprimirTorres();
+            Resolver(discos - 1, auxiliar, destino, origen);
+        }
+    }
+    public static void ImprimirTorres()
+    {
+        Console.WriteLine("Imprimiendo las torres...");
+        // Aquí puedes imprimir las torres como desees
+    }
+    public static void Main(string[] args)
+    {
+        int n = 3; // Número de discos
+        Stack<int> origen = new Stack<int>(new[] { 3, 2, 1 });
+        Stack<int> destino = new Stack<int>();
+        Stack<int> auxiliar = new Stack<int>();
+        Resolver(n, origen, destino, auxiliar);
+    }
+}
