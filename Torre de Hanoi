@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+public class VerificadorBalanceo
+{
+    public static bool EstaBalanceado(string formula)
+    {
+        Stack<char> pila = new Stack<char>();
+        foreach (char c in formula)
+        {
+            if (c == '(' || c == '[' || c == '{')
+            {
+                pila.Push(c);
+            }
+            else if (c == ')' || c == ']' || c == '}')
+            {
+                if (pila.Count == 0)
+                {
+                    return false;
+                }
+                char top = pila.Pop();
+                if (!Coinciden(top, c))
+                {
+                    return false;
+                }
+            }
+        }
+        return pila.Count == 0;
+    }
+    private static bool Coinciden(char apertura, char cierre)
+    {
+        return (apertura == '(' && cierre == ')') ||
+               (apertura == '[' && cierre == ']') ||
+               (apertura == '{' && cierre == '}');
+    }
+    public static void Main(string[] args)
+    {
+        string formula = "{7+(8*5)-[(9-7)+(4+1)]}";
+        bool balanceado = EstaBalanceado(formula);
+        if (balanceado)
+        {
+            Console.WriteLine("La fórmula está balanceada.");
+        }
+        else
+        {
+            Console.WriteLine("La fórmula no está balanceada.");
+        }
+    }
+}
