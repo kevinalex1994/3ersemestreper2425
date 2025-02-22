@@ -1,0 +1,43 @@
+Imports System
+Imports System.Collections.Generic
+Imports System.Linq
+
+Module Program
+    Sub Main()
+        ' Crear conjuntos ficticios de ciudadanos
+        Dim ciudadanos As New HashSet(Of Integer)(Enumerable.Range(1, 500))
+        Dim vacunadosPfizer As New HashSet(Of Integer)(Enumerable.Range(1, 75))
+        Dim vacunadosAstrazeneca As New HashSet(Of Integer)(Enumerable.Range(76, 75))
+
+        ' Listado de ciudadanos que no se han vacunado
+        Dim noVacunados = ciudadanos.Except(vacunadosPfizer).Except(vacunadosAstrazeneca)
+        Console.WriteLine("Ciudadanos que no se han vacunado:")
+        For Each ciudadano In noVacunados
+            Console.WriteLine(ciudadano)
+        Next
+        Console.WriteLine()
+
+        ' Listado de ciudadanos que han recibido las dos vacunas
+        Dim vacunadosAmbas = vacunadosPfizer.Intersect(vacunadosAstrazeneca)
+        Console.WriteLine("Ciudadanos que han recibido las dos vacunas:")
+        For Each ciudadano In vacunadosAmbas
+            Console.WriteLine(ciudadano)
+        Next
+        Console.WriteLine()
+
+        ' Listado de ciudadanos que solamente han recibido la vacuna de pfizer
+        Dim soloPfizer = vacunadosPfizer.Except(vacunadosAstrazeneca)
+        Console.WriteLine("Ciudadanos que solamente han recibido la vacuna de Pfizer:")
+        For Each ciudadano In soloPfizer
+            Console.WriteLine(ciudadano)
+        Next
+        Console.WriteLine()
+
+        ' Listado de ciudadanos que solamente han recibido la vacuna de Astrazeneca
+        Dim soloAstrazeneca = vacunadosAstrazeneca.Except(vacunadosPfizer)
+        Console.WriteLine("Ciudadanos que solamente han recibido la vacuna de Astrazeneca:")
+        For Each ciudadano In soloAstrazeneca
+            Console.WriteLine(ciudadano)
+        Next
+    End Sub
+End Module
