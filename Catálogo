@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Crear catálogo de revistas
+        List<string> catalogo = new List<string>
+        {
+            "Revista semana 1",
+            "Revista semana 2",
+            "Revista semana 3",
+            "Revista semana 4",
+            "Revista semana 5",
+            "Revista semana 6",
+            "Revista semana 7",
+            "Revista semana 8",
+            "Revista semana 9",
+            "Revista semana 10"
+        };
+
+        int opcion;
+        do
+        {
+            // Mostrar menú
+            Console.WriteLine("Menú:");
+            Console.WriteLine("1. Buscar un título");
+            Console.WriteLine("2. Salir");
+            Console.Write("Elige una opción: ");
+            opcion = int.Parse(Console.ReadLine());
+
+            if (opcion == 1)
+            {
+                // Buscar un título en el catálogo
+                Console.Write("Introduce el título a buscar: ");
+                string titulo = Console.ReadLine();
+                bool encontrado = BuscarTitulo(catalogo, titulo);
+
+                if (encontrado)
+                {
+                    Console.WriteLine("Título encontrado.");
+                }
+                else
+                {
+                    Console.WriteLine("Título no encontrado.");
+                }
+            }
+        } while (opcion != 2);
+    }
+
+    // Método para buscar un título en el catálogo (búsqueda iterativa)
+    static bool BuscarTitulo(List<string> catalogo, string titulo)
+    {
+        foreach (string item in catalogo)
+        {
+            if (item.Equals(titulo, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
