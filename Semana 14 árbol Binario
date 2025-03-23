@@ -1,0 +1,90 @@
+class Contacto:
+    def __init__(self, nombre, telefono, correo):
+        self.nombre = nombre
+        self.telefono = telefono
+        self.correo = correo
+
+    def __str__(self):
+        return f"Nombre: {self.nombre}, Teléfono: {self.telefono}, Correo: {self.correo}"
+
+class Nodo:
+    def __init__(self, contacto):
+        self.contacto = contacto
+        self.izquierda = None
+        self.derecha = None
+
+class ArbolContactos:
+    def __init__(self):
+        self.raiz = None
+
+    def insertar(self, contacto):
+        if self.raiz is None:
+            self.raiz = Nodo(contacto)
+        else:
+            self._insertar_recursivo(self.raiz, contacto)
+
+    def _insertar_recursivo(self, nodo, contacto):
+        if contacto.nombre < nodo.contacto.nombre:
+            if nodo.izquierda is None:
+                nodo.izquierda = Nodo(contacto)
+            else:
+                self._insertar_recursivo(nodo.izquierda, contacto)
+        elif contacto.nombre > nodo.contacto.nombre:
+            if nodo.derecha is None:
+                nodo.derecha = Nodo(contacto)
+            else:
+                self._insertar_recursivo(nodo.derecha, contacto)
+
+    def buscar(self, nombre):
+        return self._buscar_recursivo(self.raiz, nombre)
+
+    def _buscar_recursivo(self, nodo, nombre):
+        if nodo is None:
+            return None
+        if nodo.contacto.nombre == nombre:
+            return nodo.contacto
+        elif nombre < nodo.contacto.nombre:
+            return self._buscar_recursivo(nodo.izquierda, nombre)
+        else:
+            return self._buscar_recursivo(nodo.derecha, nombre)
+
+    def imprimir_inorden(self, nodo):
+        if nodo:
+            self.imprimir_inorden(nodo.izquierda)
+            print(nodo.contacto)
+            self.imprimir_inorden(nodo.derecha)
+
+def menu():
+    arbol = ArbolContactos()
+    while True:
+        print("\n--- Menú de Contactos ---")
+        print("1. Agregar contacto")
+        print("2. Buscar contacto")
+        print("3. Mostrar contactos (en orden alfabético)")
+        print("4. Salir")
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            nombre = input("Nombre: ")
+            telefono = input("Teléfono: ")
+            correo = input("Correo electrónico: ")
+            contacto = Contacto(nombre, telefono, correo)
+            arbol.insertar(contacto)
+        elif opcion == "2":
+            nombre = input("Nombre del contacto a buscar: ")
+            contacto = arbol.buscar(nombre)
+            if contacto:
+                print("\nContacto encontrado:")
+                print(contacto)
+            else:
+                print("\nEl contacto no existe.")
+        elif opcion == "3":
+            print("\nContactos en orden alfabético:")
+            arbol.imprimir_inorden(arbol.raiz)
+        elif opcion == "4":
+            print("Saliendo...")
+            break
+        else:
+            print("Opción inválida, intente de nuevo.")
+
+menu()
